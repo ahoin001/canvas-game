@@ -114,7 +114,13 @@ tile.onload = function () {
             }
             else {
                 // each frame we redraw, move cupcake down by 3
+                if(player.level %5)
+                {
+
+                }
+
                 foodList[i].y += foodList[i].speed;
+
             }
         }
     }
@@ -173,8 +179,9 @@ tile.onload = function () {
             console.log('after func');
         }
 
+
         // when 100ms pass
-        if (player.foodTimer > 100) {
+        if (player.foodTimer > player.level) {
 
             // Get random index to select from xpositions array
             let randomIndex = Math.floor(Math.random() * Math.floor(10));
@@ -244,7 +251,8 @@ tile.onload = function () {
                 //todo come up with level increase logic instead of decrease
                 // whenever score is divisible by 2, increase level (by decreasing, i could not figure another way to do this yet )
                 if (player.score % 2) {
-                    player.level--;
+                    player.level -= 2;
+
                 }
 
                 foodList.splice(i, 1);
@@ -252,7 +260,7 @@ tile.onload = function () {
         }
 
         // Before Updating food position again, check if any of the food was touched by tile
-        //console.log(foodList); One foood in array each time we arrive at this loop
+        //console.log(foodList); One food in array each time we arrive at this loop
         for (let i in foodList) {
 
             // test if it touched any tile 
@@ -279,7 +287,7 @@ tile.onload = function () {
         ctx.strokeText(player.score, 440, 40);
 
         ctx.fillStyle = "white";
-        ctx.strokeText("Hunger: "+player.level, 20, 40);
+        ctx.strokeText("Level: " + (100 - player.level +1), 20, 40);
 
         //  update food drops by redrawing them lower every redraw
         updateFoodPosition();
