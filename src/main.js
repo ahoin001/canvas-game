@@ -46,10 +46,54 @@ background.onload = function () {
 
 
                             // Game Logic starts here
+
                             tile.onload = function () {
 
 
                                 let player = new Catcher();
+
+
+                                // todo Might be able to simplify
+                                /*******************************************
+                                * MOVEMENT
+                                *******************************************/
+
+                                document.onkeydown = function (e) {
+                                    
+                                    // if player position is not left of left border of canvas, allow move
+                                    if (e.keyCode === 37 && player.x > 0) {
+                                        player.speed = -5;
+                                        player.leftPressed = true;
+                                    }
+
+                                    // if player position is not right of right border of canvas, allow move
+                                    if (e.keyCode === 39 && player.x < 500 - player.width) {
+                                        player.speed = 5;
+                                        player.rightPressed = true;
+                                    }
+                                }
+
+                                document.onkeyup = function (e) {
+                                    if (e.keyCode === 37)  {
+
+                                        player.leftPressed = false;
+                                    }
+                                    if (e.keyCode === 39) {
+
+                                        player.rightPressed = false;
+                                    }
+                                }
+
+                                const updatePlayerPosition = () => {
+
+                                    if (player.leftPressed && player.x > 0) {
+                                        player.x += player.speed;
+                                    }
+                                    if (player.rightPressed && player.x < 500 - player.width) {
+                                        player.x += player.speed;
+                                    }
+
+                                }
 
 
                                 const updateCanvas = () => {
@@ -71,6 +115,8 @@ background.onload = function () {
 
                                     }
 
+                                    // Update player position on every redraw
+                                    updatePlayerPosition();
 
                                     /*******************************************
                                     *  Make player blink
@@ -80,29 +126,29 @@ background.onload = function () {
                                     if (playerState === 0) {
 
                                         setTimeout(function () {
-                                            
-                                             // draw character with open eyes 
-                                        player.image.src = "../images/catcher2.png";
-                                        ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                        // change value used to detect player img
-                                        playerState = 1;
+                                            // draw character with open eyes 
+                                            player.image.src = "../images/catcher2.png";
+                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+
+                                            // change value used to detect player img
+                                            playerState = 1;
                                         }, 900);
 
-                                       
+
                                     }
                                     else {
 
-                                        setTimeout(function(){
+                                        setTimeout(function () {
 
                                             // change to closed eyes img
-                                        player.image.src = "../images/catcher1.png";
-                                        ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+                                            player.image.src = "../images/catcher1.png";
+                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                        // change value used to detect player img
-                                        playerState = 0;
-                                        },900);
-                                        
+                                            // change value used to detect player img
+                                            playerState = 0;
+                                        }, 900);
+
                                     }
 
 
