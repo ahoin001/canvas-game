@@ -62,12 +62,16 @@ background.onload = function () {
                                     // if player position is not left of left border of canvas, allow move
                                     if (e.keyCode === 37 && player.x > 0) {
                                         player.speed = -5;
+
+                                        // switch to movement animation
+                                        player.image.src = "../images/catcher4.png";
                                         player.leftPressed = true;
                                     }
 
                                     // if player position is not right of right border of canvas, allow move
                                     if (e.keyCode === 39 && player.x < 500 - player.width) {
                                         player.speed = 5;
+                                        player.image.src = "../images/catcher4.png";
                                         player.rightPressed = true;
                                     }
                                 }
@@ -75,10 +79,12 @@ background.onload = function () {
                                 document.onkeyup = function (e) {
                                     if (e.keyCode === 37) {
 
+                                        // switch to Still animation
+                                        player.image.src = "../images/catcher2.png";
                                         player.leftPressed = false;
                                     }
                                     if (e.keyCode === 39) {
-
+                                        player.image.src = "../images/catcher2.png";
                                         player.rightPressed = false;
                                     }
                                 }
@@ -123,6 +129,14 @@ background.onload = function () {
 
                                 }
 
+                                const tileAndFoodCollision = (theFood, theTile) => {
+
+                                    return ((theFood.x < theTile.x + theTile.width)
+                                        && (theTile.x < theFood.x + theFood.width)
+                                        && (theFood.y < theTile.y + theTile.height)
+                                        && (theTile.y < theFood.y + theFood.height))
+
+                                }
 
 
                                 const updateCanvas = () => {
@@ -182,45 +196,25 @@ background.onload = function () {
                                         }
                                     }
 
+                                    for (let i in foodList) {
+
+                                        for (let j in tileList) {
+
+                                            if (tileAndFoodCollision(foodList[i], tileList[j])) {
+                                                console.log("TILE COLLISION");
+                                                tileList.splice(j, 1);
+                                            }
+
+                                        }
+
+                                    }
+
+
                                     //  update food drops by redrawing them lower every redraw
                                     updateFoodPosition();
 
-                                    /*******************************************
-                                    *  Make player blink
-                                    *******************************************/
-
-                                    //starts at 0, so when character is spawned
-                                    if (playerState === 0) {
-
-                                        setTimeout(function () {
-
-                                            // draw character with open eyes 
-                                            player.image.src = "../images/catcher2.png";
-                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
-
-                                            // change value used to detect player img
-                                            playerState = 1;
-                                        }, 900);
-
-
-                                    }
-                                    else {
-
-                                        setTimeout(function () {
-
-                                            // change to closed eyes img
-                                            player.image.src = "../images/catcher1.png";
-                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
-
-                                            // change value used to detect player img
-                                            playerState = 0;
-                                        }, 900);
-
-                                    }
-
 
                                 }
-
 
 
                                 const startGame = () => {
@@ -243,7 +237,7 @@ background.onload = function () {
                                     }
 
                                     // Keep Updating board every 10ms , for 100 fps. 
-                                    intervalVar = setInterval(updateCanvas, 100);
+                                    intervalVar = setInterval(updateCanvas, 10);
 
 
                                 }
