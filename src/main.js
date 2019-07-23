@@ -19,8 +19,7 @@ var intervalVar;
 var foodList = [];
 var tileList = [];
 
-// Locations that food will drop from on X
-//TODO Come back and do randdom drop after making sure everything works
+// Locations that food will drop from on X, hey are above each tile
 var foodDropXPositions = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
 
 // Game Logic starts here
@@ -75,12 +74,18 @@ tile.onload = function () {
         if (player.rightPressed && player.x < 500 - player.width) {
             player.x += player.speed;
         }
-        // todo if i a
+        
         if (player.y > 500) {
 
-            // player.y =450;
-            //gameover = true;
+            player.y =500;
+            player.gameOver = true;
         }
+        console.log('before if');
+        if (player.gameOver === true) {
+            console.log('inside if');
+            gameOver();
+        }
+        console.log('afrr if ');
     }
 
     const gameOver = () => {
@@ -88,7 +93,7 @@ tile.onload = function () {
         ctx.save();
         // dim Canvas brush so blood is more transparent 
         ctx.globalAlpha = 0.6
-        ctx.drawImage(player.endImage, 100, 100, 150, 150)
+        ctx.drawImage(player.endImage, 100, 100, 300, 300)
 
         ctx.globalAlpha = 1;
         ctx.font = "20px Roboto";
@@ -113,12 +118,7 @@ tile.onload = function () {
                 foodList.splice(i, 0);
             }
             else {
-                // each frame we redraw, move cupcake down by 3
-                if(player.level %5)
-                {
-
-                }
-
+          
                 foodList[i].y += foodList[i].speed;
 
             }
@@ -172,14 +172,7 @@ tile.onload = function () {
         // food timer to time drops
         player.foodTimer++;
 
-        console.log('before if');
-        if (gameOver === true) {
-            console.log('before func');
-            gameOver();
-            console.log('after func');
-        }
-
-
+      
         // when 100ms pass
         if (player.foodTimer > player.level) {
 
@@ -233,14 +226,14 @@ tile.onload = function () {
             player.y += 5;
 
             if (player.y >= 500) {
-                //gameover = true;
+                
             }
         }
 
 
         // Update player position on before next canvas redraw
         updatePlayerPosition();
-
+       
         // Before Updating food position again, check if any of the food was touched by player
         for (let i in foodList) {
             if (playerAndFoodCollision(foodList[i])) {

@@ -22,6 +22,7 @@ class Catcher {
         this.level = 100;
         this.score = 0;
         this.foodTimer = 0;
+        this.gameOver = false;
 
         // initial images
         this.image = new Image();
