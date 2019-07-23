@@ -13,7 +13,12 @@ class Catcher {
         this.rightPressed = false;
         this.leftPressed = false;
         this.gravity = 10;
+
+
         this.safe = true;
+        this.level = 100;
+
+        this.score = 0;
 
         this.image = new Image();
         this.image.src = "../images/catcher2.png";
