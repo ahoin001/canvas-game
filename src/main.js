@@ -32,7 +32,7 @@ var tileList = [];
 
 // Locations that food will drop from on X
 //TODO Come back and do randdom drop after making sure everything works
-var foodDrop = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
+var foodDropXPositions = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
 
 
 // Make sure all images are loaded before doing anything 
@@ -49,7 +49,6 @@ background.onload = function () {
 
                             tile.onload = function () {
 
-
                                 let player = new Catcher();
 
 
@@ -59,7 +58,7 @@ background.onload = function () {
                                 *******************************************/
 
                                 document.onkeydown = function (e) {
-                                    
+
                                     // if player position is not left of left border of canvas, allow move
                                     if (e.keyCode === 37 && player.x > 0) {
                                         player.speed = -5;
@@ -74,7 +73,7 @@ background.onload = function () {
                                 }
 
                                 document.onkeyup = function (e) {
-                                    if (e.keyCode === 37)  {
+                                    if (e.keyCode === 37) {
 
                                         player.leftPressed = false;
                                     }
@@ -95,6 +94,25 @@ background.onload = function () {
 
                                 }
 
+                                const updateFoodPosition = () => {
+
+                                  for (const i in foodList) {
+
+                                    // if food drop passes the bottom of canvas
+                                      if (foodList[i].y > 500)
+                                      {
+                                        // remove it from list/memory
+                                          foodList.splice(i,0);
+                                      }
+                                      else
+                                      {
+                                        // each frame we redraw, move cupcake down by 3
+                                          foodList[i].y += foodList[i].speed ;
+                                      }
+                                  }
+                                }
+                                
+
 
                                 const updateCanvas = () => {
 
@@ -107,49 +125,87 @@ background.onload = function () {
                                     //draw player
                                     ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
+                                    // food timer to time drops
+                                    foodTimer++;
+
+                                    if (foodTimer > 100) {
+
+                                        // Get random index to select from xpositions array
+                                        let randomIndex = Math.floor(Math.random() * Math.floor(10));
+
+                                        // Each update, make a new food drop that will have a random x position to fall from 
+                                        let aFood = new Food(foodDropXPositions[randomIndex]);
+
+                                        //console.log(aFood);
+
+                                        foodList.push(aFood);
+                                        console.log(foodList);
+
+                                        // because every 100ms we will drop a food, set this back to 0 after each drop
+                                        foodTimer = 0;
+                                    }
+
                                     //draw each tile
-                                    for (let i = 0; i < tileList.length; i++) {
-                                        //TODO Maybe I can do both in for loop jobs in one loop? Come back and test
+
+                                    for (let i in tileList) {
                                         // draw each tile from the previous array
                                         ctx.drawImage(tileList[i].image, tileList[i].x, tileList[i].y, tileList[i].width, tileList[i].height);
 
                                     }
 
+                                    console.log('-------------before function');
+
+                                    //draw each food
+                                    for (let i in foodList) {
+                                        // draw each tile from the previous array
+                                        console.log('In function');
+
+                                        console.log(foodList[i]);
+
+                                        console.log("about to draw **************************");
+                                        ctx.drawImage(foodList[i].image, foodList[i].x, foodList[i].y, foodList[i].width, foodList[i].height);
+
+                                    }
+                                    console.log('&&&&&&&&&&&&&&&&&after function');
+
                                     // Update player position on every redraw
                                     updatePlayerPosition();
+
+                                    //  update food drops every redraw
+                                    updateFoodPosition();
 
                                     /*******************************************
                                     *  Make player blink
                                     *******************************************/
 
                                     // starts at 0, so when character is spawned
-                                    if (playerState === 0) {
+                                    // if (playerState === 0) {
 
-                                        setTimeout(function () {
+                                    //     setTimeout(function () {
 
-                                            // draw character with open eyes 
-                                            player.image.src = "../images/catcher2.png";
-                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+                                    //         // draw character with open eyes 
+                                    //         player.image.src = "../images/catcher2.png";
+                                    //         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                            // change value used to detect player img
-                                            playerState = 1;
-                                        }, 900);
+                                    //         // change value used to detect player img
+                                    //         playerState = 1;
+                                    //     }, 900);
 
 
-                                    }
-                                    else {
+                                    // }
+                                    // else {
 
-                                        setTimeout(function () {
+                                    //     setTimeout(function () {
 
-                                            // change to closed eyes img
-                                            player.image.src = "../images/catcher1.png";
-                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+                                    //         // change to closed eyes img
+                                    //         player.image.src = "../images/catcher1.png";
+                                    //         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                            // change value used to detect player img
-                                            playerState = 0;
-                                        }, 900);
+                                    //         // change value used to detect player img
+                                    //         playerState = 0;
+                                    //     }, 900);
 
-                                    }
+                                    // }
 
 
                                 }
