@@ -96,22 +96,33 @@ background.onload = function () {
 
                                 const updateFoodPosition = () => {
 
-                                  for (const i in foodList) {
+                                    for (const i in foodList) {
 
-                                    // if food drop passes the bottom of canvas
-                                      if (foodList[i].y > 500)
-                                      {
-                                        // remove it from list/memory
-                                          foodList.splice(i,0);
-                                      }
-                                      else
-                                      {
-                                        // each frame we redraw, move cupcake down by 3
-                                          foodList[i].y += foodList[i].speed ;
-                                      }
-                                  }
+                                        // if food drop passes the bottom of canvas
+                                        if (foodList[i].y > 500) {
+                                            // remove it from list/memory
+                                            foodList.splice(i, 0);
+                                        }
+                                        else {
+                                            // each frame we redraw, move cupcake down by 3
+                                            foodList[i].y += foodList[i].speed;
+                                        }
+                                    }
                                 }
-                                
+
+                                /*******************************************
+                                * COLLISION FUNCTION FOR PLAYER AND FOOD
+                                *******************************************/
+
+                                const playerAndFoodCollision = (theFood) => {
+
+                                    return ((theFood.x < player.x + player.width)
+                                        && (player.x < theFood.x + theFood.width)
+                                        && (theFood.y < player.y + player.height)
+                                        && (player.y < theFood.y + theFood.height))
+
+                                }
+
 
 
                                 const updateCanvas = () => {
@@ -128,84 +139,84 @@ background.onload = function () {
                                     // food timer to time drops
                                     foodTimer++;
 
+                                    // when 100ms pass
                                     if (foodTimer > 100) {
 
                                         // Get random index to select from xpositions array
                                         let randomIndex = Math.floor(Math.random() * Math.floor(10));
 
-                                        // Each update, make a new food drop that will have a random x position to fall from 
+                                        // Each update, make a new food object that will have a random x position to fall from 
                                         let aFood = new Food(foodDropXPositions[randomIndex]);
 
-                                        //console.log(aFood);
-
+                                        // add the object to array to be spawned
                                         foodList.push(aFood);
-                                        console.log(foodList);
 
                                         // because every 100ms we will drop a food, set this back to 0 after each drop
                                         foodTimer = 0;
                                     }
 
                                     //draw each tile
-
                                     for (let i in tileList) {
-                                        // draw each tile from the previous array
+
+                                        // draw each tile from the array we created earlier
                                         ctx.drawImage(tileList[i].image, tileList[i].x, tileList[i].y, tileList[i].width, tileList[i].height);
 
                                     }
 
-                                    console.log('-------------before function');
-
                                     //draw each food
                                     for (let i in foodList) {
-                                        // draw each tile from the previous array
-                                        console.log('In function');
-
-                                        console.log(foodList[i]);
-
-                                        console.log("about to draw **************************");
+                                        // draw each food from the previous array
                                         ctx.drawImage(foodList[i].image, foodList[i].x, foodList[i].y, foodList[i].width, foodList[i].height);
 
                                     }
-                                    console.log('&&&&&&&&&&&&&&&&&after function');
 
-                                    // Update player position on every redraw
+
+                                    // Update player position on before next canvas redraw
                                     updatePlayerPosition();
 
-                                    //  update food drops every redraw
+                                    // Before Updating food position again, check if any of the food was touched by player
+                                    for (let i in foodList) {
+                                        if (playerAndFoodCollision(foodList[i])) {
+                                            console.log("COLLISION");
+                                            foodList.splice(i, 1);
+                                        }
+                                    }
+
+                                    //  update food drops by redrawing them lower every redraw
                                     updateFoodPosition();
 
                                     /*******************************************
                                     *  Make player blink
                                     *******************************************/
 
-                                    // starts at 0, so when character is spawned
-                                    // if (playerState === 0) {
+                                    //starts at 0, so when character is spawned
+                                    if (playerState === 0) {
 
-                                    //     setTimeout(function () {
+                                        setTimeout(function () {
 
-                                    //         // draw character with open eyes 
-                                    //         player.image.src = "../images/catcher2.png";
-                                    //         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+                                            // draw character with open eyes 
+                                            player.image.src = "../images/catcher2.png";
+                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                    //         // change value used to detect player img
-                                    //         playerState = 1;
-                                    //     }, 900);
+                                            // change value used to detect player img
+                                            playerState = 1;
+                                        }, 900);
 
 
-                                    // }
-                                    // else {
+                                    }
+                                    else {
 
-                                    //     setTimeout(function () {
+                                        setTimeout(function () {
 
-                                    //         // change to closed eyes img
-                                    //         player.image.src = "../images/catcher1.png";
-                                    //         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+                                            // change to closed eyes img
+                                            player.image.src = "../images/catcher1.png";
+                                            ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
-                                    //         // change value used to detect player img
-                                    //         playerState = 0;
-                                    //     }, 900);
+                                            // change value used to detect player img
+                                            playerState = 0;
+                                        }, 900);
 
-                                    // }
+                                    }
 
 
                                 }
@@ -224,7 +235,7 @@ background.onload = function () {
                                         // Create a new tile in each loop iteration
                                         let aTile = new Tile();
 
-                                        //Each tile will have width of 50 and placed 5p px aprt on x axis (i*50)
+                                        //Each tile will have width of 50 and placed beside each other on x axis (i*50)
                                         aTile.x = i * 50;
                                         aTile.y = 400;
 
@@ -232,7 +243,7 @@ background.onload = function () {
                                     }
 
                                     // Keep Updating board every 10ms , for 100 fps. 
-                                    intervalVar = setInterval(updateCanvas, 10);
+                                    intervalVar = setInterval(updateCanvas, 100);
 
 
                                 }
