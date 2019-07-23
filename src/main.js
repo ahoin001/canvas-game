@@ -14,7 +14,6 @@ let tile = new Image();
 /*******************************************
  *  Global Variables
 *******************************************/
-var gameover = false;
 var intervalVar;
 var foodList = [];
 var tileList = [];
@@ -26,8 +25,47 @@ var foodDropXPositions = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
 
 tile.onload = function () {
 
+    // prepare objects
     let player = new Catcher();
     let oneFood = new Food();
+
+    player.background.onload = function () {
+
+        ctx.drawImage(player.background, 0, 0, 500, 500);
+        ctx.font = "40px Calibri";
+        ctx.strokeText("Click anywhere to start! ", 50, 200);
+
+    }
+
+
+    // give canvas click detection
+    document.querySelector('canvas').onmousedown = function () {
+
+        // if  not on game over
+        if (player.gameOver === false) {
+            // 
+            clearInterval(intervalVar);
+            // start a new game
+            startGame();
+        }
+
+        // // if game over, 
+        if (player.gameOver === true) {
+            console.log('RUNNININIFNIFNINFINFINIF');
+            // clear canvas
+            ctx.clearRect(0, 0, 500, 500);
+            //ctx.drawImage(player.background, 0, 0, 500, 500);
+
+            ctx.font = "40px Calibri";
+            ctx.strokeText("Click whenever you're ready ! ", 30, 200);
+
+            player.gameOver = false;
+            startGame();
+
+        }
+
+
+    }
 
     // todo Might be able to simplify
     /*******************************************
@@ -74,22 +112,23 @@ tile.onload = function () {
         if (player.rightPressed && player.x < 500 - player.width) {
             player.x += player.speed;
         }
-        
+
         if (player.y > 500) {
 
-            player.y =500;
+            player.y = 500;
             player.gameOver = true;
         }
-        console.log('before if');
+
         if (player.gameOver === true) {
-            console.log('inside if');
+
             gameOver();
         }
-        console.log('afrr if ');
+
     }
 
     const gameOver = () => {
-        console.log("game")
+
+        console.log("game over")
         ctx.save();
         // dim Canvas brush so blood is more transparent 
         ctx.globalAlpha = 0.6
@@ -98,12 +137,14 @@ tile.onload = function () {
         ctx.globalAlpha = 1;
         ctx.font = "20px Roboto";
         ctx.strokeText("Game Over Slime", 180, 200);
-        ctx.strokeText("Want to try Again?", 160, 250);
+        ctx.strokeText("Click to start again?", 160, 250);
 
         ctx.restore();
 
         // Stop the game canvas from refreshing 
         clearInterval(intervalVar);
+
+        //player.gameOver = false;
 
     }
 
@@ -118,7 +159,7 @@ tile.onload = function () {
                 foodList.splice(i, 0);
             }
             else {
-          
+
                 foodList[i].y += foodList[i].speed;
 
             }
@@ -172,7 +213,7 @@ tile.onload = function () {
         // food timer to time drops
         player.foodTimer++;
 
-      
+
         // when 100ms pass
         if (player.foodTimer > player.level) {
 
@@ -226,14 +267,14 @@ tile.onload = function () {
             player.y += 5;
 
             if (player.y >= 500) {
-                
+
             }
         }
 
 
         // Update player position on before next canvas redraw
         updatePlayerPosition();
-       
+
         // Before Updating food position again, check if any of the food was touched by player
         for (let i in foodList) {
             if (playerAndFoodCollision(foodList[i])) {
@@ -280,7 +321,7 @@ tile.onload = function () {
         ctx.strokeText(player.score, 440, 40);
 
         ctx.fillStyle = "white";
-        ctx.strokeText("Level: " + (100 - player.level +1), 20, 40);
+        ctx.strokeText("Level: " + (100 - player.level + 1), 20, 40);
 
         //  update food drops by redrawing them lower every redraw
         updateFoodPosition();
@@ -291,7 +332,22 @@ tile.onload = function () {
 
     const startGame = () => {
 
-        // Create 10 tile objects into array
+        // refresh game board and player character
+        player.x=100;
+        player.y=350;
+        player.safe=true;
+        player.level=100;
+        player.score=0;
+        player.foodTimer=0;
+        player.gameOver=false;
+        player.image.src = "../images/catcher2.png";
+
+        foodList = [];
+
+
+        ctx.clearRect(0, 0, 500, 500);
+        
+        // // Create 10 tile objects into array
         for (let i = 0; i <= 9; i++) {
 
             // Create a new tile in each loop iteration
@@ -309,9 +365,6 @@ tile.onload = function () {
 
 
     }
-
-
-    startGame();
 
 }
 tile.src = "images/tile.png"
