@@ -15,6 +15,12 @@ class Catcher {
         this.gravity = 10;
         this.safe = true;
 
+        this.image = new Image();
+        this.image.src = "../images/catcher2.png";
+        
+        this.background = new Image();
+        this.background.src = "../images/background.jpg";
+
     }
 
 }

@@ -13,8 +13,8 @@ let catcherAniTwo = new Image();
 let catcherAniThree = new Image();
 let catcherAniFour = new Image();
 let background = new Image();
-let blood = new Image();
 let tile = new Image();
+let blood = new Image();
 let food = new Image();
 
 
@@ -32,39 +32,61 @@ var tileList = [];
 
 // Locations that food will drop from on X
 //TODO Come back and do randdom drop after making sure everything works
-var foodDrop = [0,50,100,150,200,250,300,350,400,450];
+var foodDrop = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
 
 
 // Make sure all images are loaded before doing anything 
-background.onload = function() {
-    blood.onload = function() {
-        catcherAniOne.onload = function() {
-            catcherAniTwo.onload = function() {
-                catcherAniThree.onload = function() {
-                    catcherAniFour.onload = function() {
-                        food.onload = function() {
+background.onload = function () {
+    blood.onload = function () {
+        catcherAniOne.onload = function () {
+            catcherAniTwo.onload = function () {
+                catcherAniThree.onload = function () {
+                    catcherAniFour.onload = function () {
+                        food.onload = function () {
 
 
                             // Game Logic starts here
-                            tile.onload =function() {
+                            tile.onload = function () {
 
 
                                 let player = new Catcher();
-                                
-                                
+
+
+                                const updateCanvas = () => {
+
+                                    // Clear the canvas 
+                                    ctx.clearRect(0, 0, 500, 500);
+
+                                    //draw background
+                                    ctx.drawImage(player.background, 0, 0, 500, 500);
+
+                                    //draw player
+                                    ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+
+                                    //draw each tile
+                                    for (let i = 0; i < tileList.length; i++) {
+                                        //TODO Maybe I can do both in for loop jobs in one loop? Come back and test
+                                        // draw each tile from the previous array
+                                        ctx.drawImage(tileList[i].image, tileList[i].x, tileList[i].y, tileList[i].width, tileList[i].height);
+
+                                    }
+
+                                }
+
+
+
                                 const startGame = () => {
                                     //TODO Can i delete these since these are values declared globally?
                                     score = 0;
                                     level = 100;
-                                    
-                                    
+
+
                                     //TODO If tiles don't work come here
                                     // Create 10 tile objects into array
-                                    for(let i =0; i <= 9; i++)
-                                    {
+                                    for (let i = 0; i <= 9; i++) {
                                         // Create a new tile in each loop iteration
                                         let aTile = new Tile();
-                                        
+
                                         //Each tile will have width of 50 and placed 5p px aprt on x axis (i*50)
                                         aTile.x = i * 50;
                                         aTile.y = 400;
@@ -72,15 +94,10 @@ background.onload = function() {
                                         tileList.push(aTile);
                                     }
 
-                                    //draw each tile
-                                    for(let i =0; i < tileList.length; i++)
-                                    {
-                                        
-                                        ctx.drawImage(tileList[i].image,tileList[i].x,tileList[i].y,tileList[i].width,tileList[i].height);
+                                    // Keep Updating board every 10ms , for 100 fps. 
+                                    intervalVar = setInterval(updateCanvas, 10);
 
-                                    }
 
-                                    console.log(player);
                                 }
 
 
