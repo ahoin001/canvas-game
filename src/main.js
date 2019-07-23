@@ -10,15 +10,10 @@ let ctx = canvas.getContext('2d');
 *******************************************/
 
 let tile = new Image();
-let blood = new Image();
-let food = new Image();
-
 
 /*******************************************
  *  Global Variables
 *******************************************/
-var playerState = 0;
-var foodTimer = 0;
 var gameover = false;
 var intervalVar;
 var foodList = [];
@@ -34,9 +29,6 @@ tile.onload = function () {
 
     let player = new Catcher();
 
-    player.onload = function () {
-
-    }
     // todo Might be able to simplify
     /*******************************************
     * MOVEMENT
@@ -95,7 +87,7 @@ tile.onload = function () {
         ctx.save();
         // dim Canvas brush so blood is more transparent 
         ctx.globalAlpha = 0.6
-        ctx.drawImage(blood, 100, 100, 150, 150)
+        ctx.drawImage(player.endImage, 100, 100, 150, 150)
 
         ctx.globalAlpha = 1;
         ctx.font = "20px Roboto";
@@ -171,7 +163,7 @@ tile.onload = function () {
         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
 
         // food timer to time drops
-        foodTimer++;
+        player.foodTimer++;
 
         console.log('before if');
         if (gameOver === true) {
@@ -181,7 +173,7 @@ tile.onload = function () {
         }
 
         // when 100ms pass
-        if (foodTimer > 100) {
+        if (player.foodTimer > 100) {
 
             // Get random index to select from xpositions array
             let randomIndex = Math.floor(Math.random() * Math.floor(10));
@@ -193,7 +185,7 @@ tile.onload = function () {
             foodList.push(aFood);
 
             // because every 100ms we will drop a food, set this back to 0 after each drop
-            foodTimer = 0;
+            player.foodTimer = 0;
         }
 
         //draw each tile
