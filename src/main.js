@@ -23,7 +23,7 @@ let food = new Image();
 *******************************************/
 var score = 0;
 var level = 100;
-var animation = 0;
+var playerState = 0;
 var foodTimer = 0;
 var gameover = false;
 var intervalVar;
@@ -71,6 +71,41 @@ background.onload = function () {
 
                                     }
 
+
+                                    /*******************************************
+                                    *  Make player blink
+                                    *******************************************/
+
+                                    // starts at 0, so when character is spawned
+                                    if (playerState === 0) {
+
+                                        setTimeout(function () {
+                                            
+                                             // draw character with open eyes 
+                                        player.image.src = "../images/catcher2.png";
+                                        ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+
+                                        // change value used to detect player img
+                                        playerState = 1;
+                                        }, 900);
+
+                                       
+                                    }
+                                    else {
+
+                                        setTimeout(function(){
+
+                                            // change to closed eyes img
+                                        player.image.src = "../images/catcher1.png";
+                                        ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
+
+                                        // change value used to detect player img
+                                        playerState = 0;
+                                        },900);
+                                        
+                                    }
+
+
                                 }
 
 
@@ -103,7 +138,6 @@ background.onload = function () {
 
                                 startGame();
 
-                                console.log('All images loaded');
                             }
                             tile.src = "images/tile.png"
                         }
