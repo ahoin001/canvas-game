@@ -119,7 +119,6 @@ tile.onload = function () {
             player.jump -= player.jumpUnit;
         }
 
-        
         if (player.jump <= -100 && player.onAir) {
             player.onAir =false;
         }
@@ -285,7 +284,7 @@ tile.onload = function () {
         for (let i in tileList) {
 
             // if player is on tile, they are safe
-            if (tileAndPlayerCollision(tileList[i])) {
+            if (tileAndPlayerCollision(tileList[i]) || player.onAir ===true) {
                 // player is safe as long as they are on tile
                 player.safe = true;
                 console.log("------------------PLAYER IS SAFE");
