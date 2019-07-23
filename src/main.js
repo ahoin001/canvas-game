@@ -28,6 +28,7 @@ var foodDropXPositions = [0, 50, 100, 150, 200, 250, 300, 350, 400, 450];
 tile.onload = function () {
 
     let player = new Catcher();
+    let oneFood = new Food();
 
     // todo Might be able to simplify
     /*******************************************
@@ -203,7 +204,6 @@ tile.onload = function () {
 
         }
 
-
         // before updating player position, make sure they are safe on tile
         for (let i in tileList) {
 
@@ -252,10 +252,7 @@ tile.onload = function () {
         }
 
         // Before Updating food position again, check if any of the food was touched by tile
-        // for each food
-
         //console.log(foodList); One foood in array each time we arrive at this loop
-
         for (let i in foodList) {
 
             // test if it touched any tile 
@@ -273,6 +270,16 @@ tile.onload = function () {
 
         }
 
+        /**************************************************************************************
+        * Draw the Score and level
+        **************************************************************************************/
+        // Draw the scor
+        ctx.drawImage(oneFood.image, 400, 10, 30, 30)
+        ctx.font = "40px Calibri";
+        ctx.strokeText(player.score, 440, 40);
+
+        ctx.fillStyle = "white";
+        ctx.strokeText("Hunger: "+player.level, 20, 40);
 
         //  update food drops by redrawing them lower every redraw
         updateFoodPosition();
@@ -282,14 +289,10 @@ tile.onload = function () {
 
 
     const startGame = () => {
-        //TODO Can i delete these since these are values declared globally?
-        score = 0;
-        level = 100;
 
-
-        //TODO If tiles don't work come here
         // Create 10 tile objects into array
         for (let i = 0; i <= 9; i++) {
+
             // Create a new tile in each loop iteration
             let aTile = new Tile();
 
