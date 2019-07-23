@@ -81,6 +81,8 @@ tile.onload = function () {
             // switch to movement animation
             player.image.src = "../images/catcher4.png";
             player.leftPressed = true;
+
+
         }
 
         // if player position is not right of right border of canvas, allow move
@@ -89,7 +91,41 @@ tile.onload = function () {
             player.image.src = "../images/catcher4.png";
             player.rightPressed = true;
         }
+
+        // if up is pressed, and player not in air and on on tiles
+        if (e.keyCode === 38 && !player.onAir < 500 && player.y === 350) {
+
+            player.jump = 100;
+            player.onAir = true;
+           // player.image.src = "../images/catcher4.png";
+           
+
+        }
     }
+
+    const jump = () => {
+
+        if (player.jump > 0 && player.onAir) {
+
+            // player will move up 5 pixels at a time when jumping
+            player.y -= player.jumpUnit;
+
+            player.jump -= player.jumpUnit
+
+        }
+
+        if (player.jump <=0 && player.jump > -100 && player.onAir) {
+            player.y += player.jumpUnit;
+            player.jump -= player.jumpUnit;
+        }
+
+        
+        if (player.jump <= -100 && player.onAir) {
+            player.onAir =false;
+        }
+
+    }
+
 
     document.onkeyup = function (e) {
         if (e.keyCode === 37) {
@@ -274,6 +310,7 @@ tile.onload = function () {
 
         // Update player position on before next canvas redraw
         updatePlayerPosition();
+        jump();
 
         // Before Updating food position again, check if any of the food was touched by player
         for (let i in foodList) {
@@ -321,7 +358,7 @@ tile.onload = function () {
         ctx.strokeText(player.score, 440, 40);
 
         ctx.fillStyle = "white";
-        ctx.strokeText("Level: " + (100 - player.level + 1), 20, 40);
+        ctx.strokeText("Level: " + (100 - player.level + 1), 60, 40);
 
         //  update food drops by redrawing them lower every redraw
         updateFoodPosition();
@@ -333,20 +370,20 @@ tile.onload = function () {
     const startGame = () => {
 
         // refresh game board and player character
-        player.x=100;
-        player.y=350;
-        player.safe=true;
-        player.level=100;
-        player.score=0;
-        player.foodTimer=0;
-        player.gameOver=false;
+        player.x = 100;
+        player.y = 350;
+        player.safe = true;
+        player.level = 100;
+        player.score = 0;
+        player.foodTimer = 0;
+        player.gameOver = false;
         player.image.src = "../images/catcher2.png";
 
         foodList = [];
 
 
         ctx.clearRect(0, 0, 500, 500);
-        
+
         // // Create 10 tile objects into array
         for (let i = 0; i <= 9; i++) {
 

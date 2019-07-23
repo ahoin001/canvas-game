@@ -30,7 +30,7 @@ class Catcher {
         
         // background image for game
         this.background = new Image();
-        this.background.src = "../images/background.jpg";
+        this.background.src = "../images/back.png";
 
         // game over screen image
         this.endImage = new Image();
