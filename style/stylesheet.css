@@ -6,8 +6,17 @@ div{
 
 canvas {
     border: 3px solid black;
+    background-image:    url('../images/back.png');
+    background-size:     cover;                      
+    background-repeat:   no-repeat;
+    background-position: center center;
 }
 
 body{
     background-color: cornsilk;
+    background-image:    url('../images/cool-background.png');
+    background-size:     cover;                      
+    background-repeat:   no-repeat;
+    background-position: center center;
+}
 }

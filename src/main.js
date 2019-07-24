@@ -31,7 +31,7 @@ tile.onload = function () {
 
     player.background.onload = function () {
 
-        ctx.drawImage(player.background, 0, 0, 500, 500);
+        //ctx.drawImage(player.background, 0, 0, 500, 500);
         ctx.font = "40px Calibri";
         ctx.strokeText("Click anywhere to start! ", 50, 200);
 
@@ -97,8 +97,8 @@ tile.onload = function () {
 
             player.jump = 100;
             player.onAir = true;
-           // player.image.src = "../images/catcher4.png";
-           
+            // player.image.src = "../images/catcher4.png";
+
 
         }
     }
@@ -114,13 +114,13 @@ tile.onload = function () {
 
         }
 
-        if (player.jump <=0 && player.jump > -100 && player.onAir) {
+        if (player.jump <= 0 && player.jump > -100 && player.onAir) {
             player.y += player.jumpUnit;
             player.jump -= player.jumpUnit;
         }
 
         if (player.jump <= -100 && player.onAir) {
-            player.onAir =false;
+            player.onAir = false;
         }
 
     }
@@ -240,7 +240,7 @@ tile.onload = function () {
         ctx.clearRect(0, 0, 500, 500);
 
         //draw background
-        ctx.drawImage(player.background, 0, 0, 500, 500);
+        //ctx.drawImage(player.background, 0, 0, 500, 500);
 
         //draw player
         ctx.drawImage(player.image, player.x, player.y, player.width, player.height);
@@ -284,7 +284,7 @@ tile.onload = function () {
         for (let i in tileList) {
 
             // if player is on tile, they are safe
-            if (tileAndPlayerCollision(tileList[i]) || player.onAir ===true) {
+            if (tileAndPlayerCollision(tileList[i]) || player.onAir === true) {
                 // player is safe as long as they are on tile
                 player.safe = true;
                 console.log("------------------PLAYER IS SAFE");
@@ -384,7 +384,7 @@ tile.onload = function () {
         ctx.clearRect(0, 0, 500, 500);
 
         // // Create 10 tile objects into array
-        for (let i = 0; i <= 9; i++) {
+        for (let i = 0; i <= 11; i++) {
 
             // Create a new tile in each loop iteration
             let aTile = new Tile();
