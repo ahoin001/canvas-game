@@ -27,10 +27,6 @@ class Catcher {
         // initial images
         this.image = new Image();
         this.image.src = "../images/catcher2.png";
-        
-        // background image for game
-        this.background = new Image();
-        this.background.src = "../images/back.png";
 
         // game over screen image
         this.endImage = new Image();
