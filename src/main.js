@@ -79,7 +79,7 @@ tile.onload = function () {
             player.speed = -5;
 
             // switch to movement animation
-            player.image.src = "../images/catcher4.png";
+            player.image.src = "./images/catcher4.png";
             player.leftPressed = true;
 
 
@@ -88,7 +88,7 @@ tile.onload = function () {
         // if player position is not right of right border of canvas, allow move
         if (e.keyCode === 39 && player.x < 500 - player.width) {
             player.speed = 5;
-            player.image.src = "../images/catcher4.png";
+            player.image.src = "./images/catcher4.png";
             player.rightPressed = true;
         }
 
@@ -130,11 +130,11 @@ tile.onload = function () {
         if (e.keyCode === 37) {
 
             // switch to Still animation
-            player.image.src = "../images/catcher2.png";
+            player.image.src = "./images/catcher2.png";
             player.leftPressed = false;
         }
         if (e.keyCode === 39) {
-            player.image.src = "../images/catcher2.png";
+            player.image.src = "./images/catcher2.png";
             player.rightPressed = false;
         }
     }
@@ -298,7 +298,7 @@ tile.onload = function () {
 
         //if player is not safe (Not on tile) They fall down canvas
         if (player.safe === false) {
-            player.image.src = "../images/catcher3.png";
+            player.image.src = "./images/catcher3.png";
             player.y += 5;
 
             if (player.y >= 500) {
@@ -376,7 +376,7 @@ tile.onload = function () {
         player.score = 0;
         player.foodTimer = 0;
         player.gameOver = false;
-        player.image.src = "../images/catcher2.png";
+        player.image.src = "./images/catcher2.png";
 
         foodList = [];
 
