@@ -27,7 +27,7 @@ tile.onload = function () {
 
     // prepare objects
     let player = new Catcher();
-    let oneFood = new Food();
+    //let oneFood = new Food();
 
 
 
@@ -86,19 +86,9 @@ tile.onload = function () {
         }
 
         // if player position is not right of right border of canvas, allow move
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        if (e.keyCode === 39 && player.x < 500 - player.width) {
-=======
-        if (e.keyCode === 39 && player.x < 800 - player.width) {
->>>>>>> parent of 37beb05... Change boundary width
-=======
-        if (e.keyCode === 39 && player.x < 500 - player.width) {
->>>>>>> parent of 1b6ad24... fix right side boundary to adjust to increase in canvas size made earlier
-=======
-        if (e.keyCode === 39 && player.x < 500 - player.width) {
->>>>>>> parent of 1b6ad24... fix right side boundary to adjust to increase in canvas size made earlier
+
+        if (e.keyCode === 39 && player.x < 600 - player.width) {
+
             player.speed = 5;
             player.image.src = "./images/catcher4.png";
             player.rightPressed = true;
@@ -156,7 +146,7 @@ tile.onload = function () {
         if (player.leftPressed && player.x > 0) {
             player.x += player.speed;
         }
-        if (player.rightPressed && player.x < 500 - player.width) {
+        if (player.rightPressed && player.x < 600 - player.width) {
             player.x += player.speed;
         }
 
@@ -312,10 +302,6 @@ tile.onload = function () {
         if (player.safe === false) {
             player.image.src = "./images/catcher3.png";
             player.y += 5;
-
-            if (player.y >= 500) {
-
-            }
         }
 
 
@@ -330,7 +316,7 @@ tile.onload = function () {
                 // add 1 to score
                 player.score += 1;
 
-                //todo come up with level increase logic instead of decrease
+                //TODO come up with level increase logic instead of decrease
                 // whenever score is divisible by 2, increase level (by decreasing, i could not figure another way to do this yet )
                 if (player.score % 2) {
                     player.level -= 2;
@@ -364,7 +350,7 @@ tile.onload = function () {
         * Draw the Score and level
         **************************************************************************************/
         // Draw the scor
-        ctx.drawImage(oneFood.image, 400, 10, 30, 30)
+        ctx.drawImage(player.foodImage, 400, 10, 30, 30)
         ctx.font = "40px Calibri";
         ctx.strokeText(player.score, 440, 40);
 
