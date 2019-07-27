@@ -146,6 +146,7 @@ tile.onload = function () {
         if (player.leftPressed && player.x > 0) {
             player.x += player.speed;
         }
+        // TODO Why is not clearing in this area
         if (player.rightPressed && player.x < 600 - player.width) {
             player.x += player.speed;
         }
