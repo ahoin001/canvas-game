@@ -86,7 +86,7 @@ tile.onload = function () {
         }
 
         // if player position is not right of right border of canvas, allow move
-        if (e.keyCode === 39 && player.x < 800 - player.width) {
+        if (e.keyCode === 39 && player.x < 600 - player.width) {
             player.speed = 5;
             player.image.src = "./images/catcher4.png";
             player.rightPressed = true;
