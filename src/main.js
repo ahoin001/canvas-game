@@ -29,13 +29,13 @@ tile.onload = function () {
     let player = new Catcher();
     let oneFood = new Food();
 
-    
 
-        //ctx.drawImage(player.background, 0, 0, 500, 500);
-        ctx.font = "40px Calibri";
-        ctx.strokeText("Click anywhere to start! ", 50, 200);
 
-    
+    //ctx.drawImage(player.background, 0, 0, 500, 500);
+    ctx.font = "40px Calibri";
+    ctx.strokeText("Click anywhere to start! ", 50, 200);
+
+
 
 
     // give canvas click detection
