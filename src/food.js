@@ -11,7 +11,7 @@ class Food {
         this.y = 0;
 
         this.image = new Image();
-        this.image.src = "../images/food.png";
+        this.image.src = "./images/food.png";
     }
 
 

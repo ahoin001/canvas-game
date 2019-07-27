@@ -26,11 +26,11 @@ class Catcher {
 
         // initial images
         this.image = new Image();
-        this.image.src = "../images/catcher2.png";
+        this.image.src = "./images/catcher2.png";
 
         // game over screen image
         this.endImage = new Image();
-        this.endImage.src = "../images/blood.png";
+        this.endImage.src = "./images/blood.png";
 
     }
 

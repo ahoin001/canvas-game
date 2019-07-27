@@ -6,7 +6,7 @@ class Tile {
         this.width = 50;
         this.height = 20;
         this.image = new Image();
-        this.image.src = "../images/tile.png";
+        this.image.src = "./images/tile.png";
     }
 
 
