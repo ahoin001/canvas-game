@@ -35,7 +35,7 @@ class Catcher {
         // drop image
 
         this.foodImage = new Image();
-        this.foodImage.src = "./images/food.png";
+        this.foodImage.src = "./images/diamond.jpg";
 
     }
 
