@@ -27,7 +27,7 @@ tile.onload = function () {
 
     // prepare objects
     let player = new Catcher();
-    // let oneFood = new Food();
+    let oneFood = new Food();
 
 
 
@@ -364,7 +364,7 @@ tile.onload = function () {
         * Draw the Score and level
         **************************************************************************************/
         // Draw the scor
-        ctx.drawImage(player.foodImage, 400, 10, 30, 30)
+        ctx.drawImage(oneFood.image, 400, 10, 30, 30)
         ctx.font = "40px Calibri";
         ctx.strokeText(player.score, 440, 40);
 
