@@ -240,7 +240,7 @@ tile.onload = function () {
     const updateCanvas = () => {
 
         // Clear the canvas 
-        ctx.clearRect(0, 0, 600, 500);
+        ctx.clearRect(0, 0, 500, 500);
 
         //draw background
         //ctx.drawImage(player.background, 0, 0, 500, 500);
