@@ -86,7 +86,11 @@ tile.onload = function () {
         }
 
         // if player position is not right of right border of canvas, allow move
+<<<<<<< HEAD
         if (e.keyCode === 39 && player.x < 500 - player.width) {
+=======
+        if (e.keyCode === 39 && player.x < 800 - player.width) {
+>>>>>>> parent of 37beb05... Change boundary width
             player.speed = 5;
             player.image.src = "./images/catcher4.png";
             player.rightPressed = true;
