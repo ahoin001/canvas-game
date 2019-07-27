@@ -88,10 +88,14 @@ tile.onload = function () {
         // if player position is not right of right border of canvas, allow move
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (e.keyCode === 39 && player.x < 500 - player.width) {
 =======
         if (e.keyCode === 39 && player.x < 800 - player.width) {
 >>>>>>> parent of 37beb05... Change boundary width
+=======
+        if (e.keyCode === 39 && player.x < 500 - player.width) {
+>>>>>>> parent of 1b6ad24... fix right side boundary to adjust to increase in canvas size made earlier
 =======
         if (e.keyCode === 39 && player.x < 500 - player.width) {
 >>>>>>> parent of 1b6ad24... fix right side boundary to adjust to increase in canvas size made earlier
